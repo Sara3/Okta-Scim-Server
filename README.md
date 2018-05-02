@@ -24,29 +24,27 @@ Once all above is install run the node server "npm start". Make the following ca
 You can use ngrok "ngrok http 8081" to make server available online. use https://abc.ngrok.io in Okta SCIM app or Runscope to test online. 
 
 1) POST {SCIM_Base_Url}/scim/v2/Users
+  add your values instead of <>
 
-{  
-   "schemas":[  
-      "urn:ietf:params:scim:schemas:core:2.0:User"
-   ],
-   "userName":"username@example.com",
-   "name":{  
-      "givenName":"<GivenName>",
-      "middleName":"",
-      "familyName":"<FaimlyName>"
-   },
-   "emails":[  
-      {  
-         "primary":true,
-         "value":"username@example.com",
-         "type":"work"
-      }
-   ],
-   "displayName":"<display name>","externalId":"<externalId>","groups":[  
+  {  
+     "userName":"<username@example.com>",
+     "name":{  
+        "givenName":"<GivenName>",
+        "middleName":"",
+        "familyName":"<FaimlyName>"
+     },
+     "emails":[  
+        {  
+           "primary":<true>,
+           "value":"<username@example.com>",
+           "type":"<work>"
+        }
+     ],
+     "displayName":"<display name>","externalId":"<externalId>","groups":[  
 
-   ],
-   "active":true
-}
+     ],
+     "active":<true>
+  }
 
 2) GET {SCIM_Base_Url}/scim/v2/Users?count=2&startIndex=1
 

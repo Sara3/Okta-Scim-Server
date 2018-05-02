@@ -137,9 +137,16 @@ app.post('/scim/v2/Users',  function (req, res) {
       if (err == null) {
         if (rows === undefined) {
           var userId = String(uuid.v1());
+          console.log("userId---->",userId)
+          console.log("active---->",active)
+          console.log("userName---->",userName)
+          console.log("givenName---->",givenName)
+          console.log("familyName---->",familyName)
+
+
           var runQuery = "INSERT INTO 'Users' (id, active, userName, givenName,\
                        middleName, familyName) VALUES ('" + userId + "','" 
-                       + active + "','" + userName + "','" + givenName + "','"
+                       + active + "','" + userName + "','" + givenName + "','"+ middleName + "','"
                        + familyName + "')";
           db.run(runQuery, function(err) {
             if(err !== null) {
