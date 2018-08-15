@@ -371,7 +371,7 @@ app.get('/scim/v2', function (req, res) { res.send('SCIM'); });
 /**
  *  Instantiates or connects to DB
  */
-var server = app.listen(8081, function () {
+var server = app.listen(process.env.PORT || 8081, function () {
   var databaseQuery = "SELECT name FROM sqlite_master WHERE type='table' \
                       AND name='Users'";
   db.get(databaseQuery, function(err, rows) {
