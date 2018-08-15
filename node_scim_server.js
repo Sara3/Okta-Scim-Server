@@ -118,6 +118,13 @@ function SCIMError(errorMessage, statusCode) {
 /**
  *  Creates a new User with given attributes
  */
+
+ app.post('/',  function (req, res) {  
+
+    console.log("got in / -----")
+
+ }
+
 app.post('/scim/v2/Users',  function (req, res) {   
   var url_parts = url.parse(req.url, true);
   var req_url =  url_parts.pathname;
