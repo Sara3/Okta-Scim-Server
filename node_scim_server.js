@@ -137,11 +137,9 @@ app.post('/scim/v2/Users',  function (req, res) {
       if (err == null) {
         if (rows === undefined) {
           var userId = String(uuid.v1());
-          console.log("userId---->",userId)
-          console.log("active---->",active)
-          console.log("userName---->",userName)
-          console.log("givenName---->",givenName)
-          console.log("familyName---->",familyName)
+          console.log("--------------------------")
+          console.log(userJsonData)
+      
 
 
           var runQuery = "INSERT INTO 'Users' (id, active, userName, givenName,\
@@ -314,56 +312,56 @@ app.patch("/scim/v2/Users/:userId", function (req, res) {
 /**
  *  Update User attributes via Patch
  */
-app.put("/scim/v2/Users/:userId", function (req, res) {
-	var userId = req.params.userId;
-	var url_parts = url.parse(req.url, true);
-	var req_url = url_parts.pathname;
-  var requestBody = "";
+// app.put("/scim/v2/Users/:userId", function (req, res) {
+// 	var userId = req.params.userId;
+// 	var url_parts = url.parse(req.url, true);
+// 	var req_url = url_parts.pathname;
+//   var requestBody = "";
 	
-  req.on('data', function (data) {
-    requestBody += data;
+//   req.on('data', function (data) {
+//     requestBody += data;
 
-		var userJsonData = JSON.parse(requestBody);
-		var active = userJsonData['active'];
-		var userName = userJsonData['userName'];
-		var givenName = userJsonData["name"]["givenName"];
-		var middleName = userJsonData["name"]["middleName"];
-		var familyName = userJsonData["name"]["familyName"];
-    var queryById = "SELECT * FROM Users WHERE id='" + userId + "'";
+// 		var userJsonData = JSON.parse(requestBody);
+// 		var active = userJsonData['active'];
+// 		var userName = userJsonData['userName'];
+// 		var givenName = userJsonData["name"]["givenName"];
+// 		var middleName = userJsonData["name"]["middleName"];
+// 		var familyName = userJsonData["name"]["familyName"];
+//     var queryById = "SELECT * FROM Users WHERE id='" + userId + "'";
 
-		db.get(queryById, function(err, rows) {
-      if (err == null) {
-        if (rows != undefined){
-          var updateUsersQuery = "UPDATE 'Users' SET userName = '" + String(userName)
-                                + "', givenName = '" + String(givenName) + "', middleName ='"
-                                + String(middleName) + "', familyName= '" + String(familyName)
-                                + "'   WHERE id = '" + userId + "'";
+// 		db.get(queryById, function(err, rows) {
+//       if (err == null) {
+//         if (rows != undefined){
+//           var updateUsersQuery = "UPDATE 'Users' SET userName = '" + String(userName)
+//                                 + "', givenName = '" + String(givenName) + "', middleName ='"
+//                                 + String(middleName) + "', familyName= '" + String(familyName)
+//                                 + "'   WHERE id = '" + userId + "'";
           
-          db.run(updateUsersQuery, function(err) {
-            if(err !== null) {
-              var scim_error = SCIMError( String(err), "400");
-              res.writeHead(400, {'Content-Type': 'text/plain'});
-              res.end(JSON.stringify(scim_error));
-            } else {
-                var scimUserResource = GetSCIMUserResource(userId, active, userName,
-                  givenName, middleName, familyName, req_url); 
-                res.writeHead(201, {'Content-Type': 'text/json'});
-                res.end(JSON.stringify(scimUserResource));
-              }
-          });
-        } else {
-            var scim_error = SCIMError( "User Does Not Exist", "404");
-            res.writeHead(404, {'Content-Type': 'text/plain'});
-            res.end(JSON.stringify(scim_error));
-          }
-      } else {
-          var scim_error = SCIMError( String(err), "400");
-          res.writeHead(400, {'Content-Type': 'text/plain'});
-          res.end(JSON.stringify(scim_error));
-        }
-    }); 
-  });
-});
+//           db.run(updateUsersQuery, function(err) {
+//             if(err !== null) {
+//               var scim_error = SCIMError( String(err), "400");
+//               res.writeHead(400, {'Content-Type': 'text/plain'});
+//               res.end(JSON.stringify(scim_error));
+//             } else {
+//                 var scimUserResource = GetSCIMUserResource(userId, active, userName,
+//                   givenName, middleName, familyName, req_url); 
+//                 res.writeHead(201, {'Content-Type': 'text/json'});
+//                 res.end(JSON.stringify(scimUserResource));
+//               }
+//           });
+//         } else {
+//             var scim_error = SCIMError( "User Does Not Exist", "404");
+//             res.writeHead(404, {'Content-Type': 'text/plain'});
+//             res.end(JSON.stringify(scim_error));
+//           }
+//       } else {
+//           var scim_error = SCIMError( String(err), "400");
+//           res.writeHead(400, {'Content-Type': 'text/plain'});
+//           res.end(JSON.stringify(scim_error));
+//         }
+//     }); 
+//   });
+// });
 
 /**
  *  Default URL
